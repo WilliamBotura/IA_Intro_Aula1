@@ -12,12 +12,14 @@ public class Controller_IA : MonoBehaviour
     public enum Estados
     {
         ESPERAR,
-        PATRULHAR
+        PATRULHAR,
+        PERSEGUIR
     }
 
     private Estados estadoAtual;
     private Transform alvo;
     private NavMeshAgent navMeshAgent;
+    private Transform playerTransform;
 
     //Estado: Esperar
     [Header("Estado: Esperar")]
@@ -32,6 +34,11 @@ public class Controller_IA : MonoBehaviour
     public float distanciaMinimaWaypointAtual = 1.0f;
     private float distanciaWaypointAtual;
 
+    //Estado: Perseguir
+    [Header("Estado: Perseguir")]
+    float distanciaPlayer;
+    float distanciaMinimaPlayer = 3.0f;
+
     #endregion VARIABLES
 
     private void Awake()
@@ -42,6 +49,8 @@ public class Controller_IA : MonoBehaviour
 
     private void Start()
     {
+        //gets player transform through gameObject
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         //Makes sure that waypointAtual will never be null
         waypointAtual = waypoint1;
         //Makes sure that when the game starts, Esperar will be the default method;
@@ -57,12 +66,18 @@ public class Controller_IA : MonoBehaviour
 
     private void ChecarEstados()
     {
+        if (estadoAtual != Estados.PERSEGUIR && VisaoJogador())
+        {
+            Perseguir();
+            return;
+        }
+
         //using to define behaveour of the AI
         //enter + enter on adding estadoAtual to the switch adds the states
         switch (estadoAtual)
         {
             case Estados.ESPERAR:
-                //Verificates if the playes has waited for the determined time, if not, he will, if he did, go into the Patrulhar state;
+                //Verifies if the playes has waited for the determined time, if not, he will, if he did, go into the Patrulhar state;
                 if (EsperouTempoSuficiente())
                 {
                     Patrulhar();
@@ -72,7 +87,7 @@ public class Controller_IA : MonoBehaviour
                     alvo = transform;
                 }
                 break;
-
+                //verifies if player is close to the waypoint. If he is, waits again and changes target. If not, he goes in the waypoint direction.
             case Estados.PATRULHAR:
                 if (PertoWaypointAtual())
                 {
@@ -84,6 +99,17 @@ public class Controller_IA : MonoBehaviour
                 else
                 {
                     alvo = waypointAtual;
+                }
+                break;
+                //verifies if IA doesn't have vision of the player. If he has, he will chase him, if not, he will wait
+            case Estados.PERSEGUIR:
+                if (!VisaoJogador())
+                {
+                    Esperar();
+                }
+                else
+                {
+                    alvo = playerTransform;
                 }
                 break;
         }
@@ -133,4 +159,17 @@ public class Controller_IA : MonoBehaviour
     }
 
     #endregion PATRULHAR
+
+    #region PERSEGUIR
+    private void Perseguir()
+    {
+        estadoAtual = Estados.PERSEGUIR;
+    }
+
+    private bool VisaoJogador()
+    {
+        distanciaPlayer = Vector3.Distance(transform.position, playerTransform.position);
+        return distanciaPlayer <= distanciaMinimaPlayer;
+    }
+    #endregion PERSEGUIR
 }
