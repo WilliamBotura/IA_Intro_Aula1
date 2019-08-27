@@ -13,7 +13,8 @@ public class Controller_IA : MonoBehaviour
     {
         ESPERAR,
         PATRULHAR,
-        PERSEGUIR
+        PERSEGUIR,
+        PROCURAR
     }
 
     private Estados estadoAtual;
@@ -38,6 +39,11 @@ public class Controller_IA : MonoBehaviour
     [Header("Estado: Perseguir")]
     float distanciaPlayer;
     float distanciaMinimaPlayer = 3.0f;
+
+    //Estado: Procurar
+    [Header("Estado: Procurar")]
+    float tempoProcurar = 5.0f;
+    private float tempoProcurando = 0.0f;
 
     #endregion VARIABLES
 
@@ -105,16 +111,30 @@ public class Controller_IA : MonoBehaviour
             case Estados.PERSEGUIR:
                 if (!VisaoJogador())
                 {
-                    Esperar();
+                    Procurar();
                 }
                 else
                 {
                     alvo = playerTransform;
                 }
                 break;
+                //Looks for the player after he left the AI field of vision. If he looks for 5 seconds and don't see him, go to Esperar state.
+            case Estados.PROCURAR:
+                if (ProcurouTempoSuficiente())
+                {
+                    Esperar();
+                }
+                else
+                {
+                    alvo = null;
+                }
+                break;
         }
 
-        navMeshAgent.destination = alvo.position;
+        if (alvo != null)
+        {
+            navMeshAgent.destination = alvo.position; 
+        }
     }
 
     #region ESPERAR
@@ -172,4 +192,20 @@ public class Controller_IA : MonoBehaviour
         return distanciaPlayer <= distanciaMinimaPlayer;
     }
     #endregion PERSEGUIR
+
+    #region PROCURAR
+
+    //state that defines the AI to look for the player after losing sight of him
+    private void Procurar()
+    {
+        estadoAtual = Estados.PROCURAR;
+        tempoProcurando = Time.time;
+    }
+
+    private bool ProcurouTempoSuficiente()
+    {
+        return tempoProcurando + tempoProcurar <= Time.time;
+    }
+
+    #endregion PROCURAR
 }

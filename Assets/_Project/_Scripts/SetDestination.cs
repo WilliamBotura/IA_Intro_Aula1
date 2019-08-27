@@ -22,6 +22,6 @@ public class SetDestination : MonoBehaviour
     private void Movimentar()
     {
         //you could use the navMeshAgent.SetDestination, but we are using the .destinantion-
-        navMeshAgent.destination = alvo.position;
+        //navMeshAgent.destination = alvo.position;
     }
 }

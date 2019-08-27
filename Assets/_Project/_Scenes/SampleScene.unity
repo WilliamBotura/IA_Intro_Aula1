@@ -429,6 +429,7 @@ GameObject:
   - component: {fileID: 1186467949}
   - component: {fileID: 1186467948}
   - component: {fileID: 1186467947}
+  - component: {fileID: 1186467952}
   m_Layer: 0
   m_Name: NonStaticObstacle
   m_TagString: Untagged
@@ -446,11 +447,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0
+  m_Extents: {x: 0.5, y: 0.5, z: 0.975}
+  m_MoveThreshold: 8.28
   m_Carve: 1
   m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: -0.47}
   m_TimeToStationary: 0.5
 --- !u!65 &1186467948
 BoxCollider:
@@ -519,11 +520,25 @@ Transform:
   m_GameObject: {fileID: 1186467946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.61, y: 0.532, z: 0.12}
-  m_LocalScale: {x: 1, y: 1, z: 2.0888066}
+  m_LocalScale: {x: 1, y: 1, z: 4.025548}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1186467952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186467946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3eb4f4eb4f06194fbb208b502f22741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentidoMovimento: {x: 0, y: 0, z: -1}
+  vel: 2
 --- !u!1 &1277299164
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +625,7 @@ Transform:
   m_GameObject: {fileID: 1277299164}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 3.7032, y: 1, z: 5.1203}
+  m_LocalScale: {x: 1.5324954, y: 1, z: 22.321434}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -703,7 +718,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290393166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.02, y: 1.07, z: 0}
+  m_LocalPosition: {x: -2.49, y: 1.07, z: -5.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -871,7 +886,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575788016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.71, y: 0.5, z: 0}
+  m_LocalPosition: {x: 2.72, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
