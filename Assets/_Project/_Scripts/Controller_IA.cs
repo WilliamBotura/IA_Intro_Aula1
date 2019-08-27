@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class Controller_IA : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class Controller_IA : MonoBehaviour
     private Transform alvo;
     private NavMeshAgent navMeshAgent;
     private Transform playerTransform;
+    private AICharacterControl aiCharacterControl;
 
     //Estado: Esperar
     [Header("Estado: Esperar")]
@@ -51,6 +53,7 @@ public class Controller_IA : MonoBehaviour
     {
         //Components
         navMeshAgent = GetComponent<NavMeshAgent>();
+        aiCharacterControl = GetComponent<AICharacterControl>();
     }
 
     private void Start()
@@ -131,6 +134,12 @@ public class Controller_IA : MonoBehaviour
                 break;
         }
 
+        //gets alvo from the AICharacterController in the componets
+        if (aiCharacterControl)
+        {
+            aiCharacterControl.SetTarget(alvo);
+        }
+        //but if he doesn't have the script in its compenets, it will check for the alvo in itself
         if (alvo != null)
         {
             navMeshAgent.destination = alvo.position; 
